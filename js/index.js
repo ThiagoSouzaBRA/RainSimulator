@@ -9,7 +9,7 @@
 var Animation;
 var running = true;
 var gotas = [];
-var qtdgotas = 150;
+var qtdgotas = 200;
 
 function Start(){
     Animation = createAnimation(800,800);
@@ -21,7 +21,12 @@ function Start(){
 }
 
 function Stop(){
-    running = false;
+    running == true ? (
+        running = false,
+        document.getElementById("status").innerHTML  = "Continuar"
+        ):
+        (running = true,document.getElementById("status").innerHTML  = "Pausar");
+    
 }
 
 function Update(){ 
@@ -43,7 +48,6 @@ function createAnimation(widthWindow, heightWindow){
     return [this.canvasWindow,this.context];
 }
 
-
 function showBackground(){
     Animation[1].clearRect(0, 0, Animation[0].width, Animation[0].height); 
     Animation[1].fillStyle = 'rgb(0, 0, 0)';
@@ -55,11 +59,13 @@ function gotasModel(){
     this.y = Math.floor(Math.random() * (-800 + 0)) + 0,
     this.speed = 10;
     this.width = 3;
-    this.height = 20;
+    this.height = 15;
+    this.wind = (Math.floor(Math.random() * (4 + -1)) + -1)
     this.scale = (Math.floor(Math.random() * (1 + 1)) + 1)/3;
 
     this.fall = function(){
         this.y += this.speed;
+        this.x += this.wind;
 
         this.y > Animation[0].height ?(
             this.y = Math.floor(Math.random() * (-800 + 0)) + 0,
